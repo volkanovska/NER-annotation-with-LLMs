@@ -34,6 +34,7 @@ Structure of directory:
 
 Climate-Change-NER (https://huggingface.co/datasets/ibm/Climate-Change-NER):
 
+```bibtex
 @misc{bhattacharjee2024indus,
   title={INDUS: Effective and Efficient Language Models for Scientific Applications}, 
   author={Bishwaranjan Bhattacharjee and Aashka Trivedi and Masayasu Muraoka and Muthukumaran Ramasubramanian and Takuma Udagawa and Iksha Gurung and Rong Zhang and Bharath Dandala and Rahul Ramachandran and Manil Maskey and Kayleen Bugbee and Mike Little and Elizabeth Fancher and Lauren Sanders and Sylvain Costes and Sergi Blanco-Cuaresma and Kelly Lockhart and Thomas Allen and Felix Grazes and Megan Ansdel and Alberto Accomazzi and Yousef El-Kurdi and Davis Wertheimer and Birgit Pfitzmann and Cesar Berrospi Ramis and Michele Dolfi and Rafael Teixeira de Lima and Panos Vagenas and S. Karthik Mukkavilli and Peter Staar and Sanaz Vahidinia and Ryan McGranaghan and Armin Mehrabian and Tsendgar Lee},
@@ -43,10 +44,11 @@ Climate-Change-NER (https://huggingface.co/datasets/ibm/Climate-Change-NER):
   primaryClass={cs.CL},
   url={https://arxiv.org/abs/2405.10725}
 }
-
+```
 
 BiodivNER (https://zenodo.org/records/6458503):
 
+```bibtex
 @dataset{nora_abdelmageed_2022_6575865,
   author       = {Nora Abdelmageed and
                   Felicitas Löffler and
@@ -66,4 +68,4 @@ BiodivNER (https://zenodo.org/records/6458503):
   doi          = {10.5281/zenodo.6575865},
   url          = {https://doi.org/10.5281/zenodo.6575865}
 }
-
+```
