@@ -29,3 +29,41 @@ Structure of directory:
         - prompt + raw model output, saved as json files per prompt
     - mistralV03
         - prompt + raw model output, saved as json files per prompt
+
+# Citing the data holders
+
+Climate-Change-NER (https://huggingface.co/datasets/ibm/Climate-Change-NER):
+
+@misc{bhattacharjee2024indus,
+  title={INDUS: Effective and Efficient Language Models for Scientific Applications}, 
+  author={Bishwaranjan Bhattacharjee and Aashka Trivedi and Masayasu Muraoka and Muthukumaran Ramasubramanian and Takuma Udagawa and Iksha Gurung and Rong Zhang and Bharath Dandala and Rahul Ramachandran and Manil Maskey and Kayleen Bugbee and Mike Little and Elizabeth Fancher and Lauren Sanders and Sylvain Costes and Sergi Blanco-Cuaresma and Kelly Lockhart and Thomas Allen and Felix Grazes and Megan Ansdel and Alberto Accomazzi and Yousef El-Kurdi and Davis Wertheimer and Birgit Pfitzmann and Cesar Berrospi Ramis and Michele Dolfi and Rafael Teixeira de Lima and Panos Vagenas and S. Karthik Mukkavilli and Peter Staar and Sanaz Vahidinia and Ryan McGranaghan and Armin Mehrabian and Tsendgar Lee},
+  year={2024},
+  eprint={2405.10725},
+  archivePrefix={arXiv},
+  primaryClass={cs.CL},
+  url={https://arxiv.org/abs/2405.10725}
+}
+
+
+BiodivNER (https://zenodo.org/records/6458503):
+
+@dataset{nora_abdelmageed_2022_6575865,
+  author       = {Nora Abdelmageed and
+                  Felicitas Löffler and
+                  Leila Feddoul and
+                  Alsayed Algergawy and
+                  Sheeba Samuel and
+                  Jitendra Gaikwad and
+                  Anahita Kazem and
+                  Birgitta König-Ries},
+  title        = {{BiodivNERE: Gold Standard Corpora for Named Entity 
+                   Recognition and Relation Extraction in
+                   Biodiversity Domain}},
+  month        = apr,
+  year         = 2022,
+  note         = {Added BiodivRE Multi-class corpus},
+  publisher    = {Zenodo},
+  doi          = {10.5281/zenodo.6575865},
+  url          = {https://doi.org/10.5281/zenodo.6575865}
+}
+
