@@ -1,6 +1,9 @@
-# noladida submission
+# Supplementary data and code for a submission to the NLP4Ecology2025 workshop of the NoDaLiDA2025 conference. 
+Submission title: "Large Language Models as Annotators of Named Entities in Climate Change and Biodiversity: A Preliminary Study". 
 
-This repository contains prompts and model responses for two corpora of named entities and three large language models (LLM).
+This repository contains the complete set of prompts tested in the experiments and the results obtained from each large language model (LLM).
+
+Four LLMs are tested: two proprietary - gpt-4o-mini and gpt-4o-2024-05-13, developed and owned by OpenAI, and two open-source: Meta-Llama-3.1-70B-Instruct (hereinafter: Llama-70B) and Meta-Llama-3.1-405B-Instruct (hereinafter: Llama-405B), both developed and owned by Meta and made available both through Hugging Face and API providers.  
 
 For prompts from the dataset Climate-Change-NER, the system message is: "You are a helpful climate change expert, specialized in annotating named entities in texts on climate change."
 
@@ -8,10 +11,15 @@ For prompts from the dataset BiodivNER, the system message is: "You are a helpfu
 
 # Generating classification reports
 
-To recreate the classification reports of the paper, run the script "generate_evaluation_report.py" with any of the json files in the directories "ccner_bio" or "biodivner_bio".
+Classification reports for each type of prompt can be recreated by running the script "generate_evaluation_report_tokens.py" for promts with token-based input, or the script "generate_evaluation_report_strings.py" for prompts with string-based input. 
+
+For example, to obtain the results for the dataset BiodivNER, model gpt-4o-mini, and a prompt type containing similar 5 task examples (TEs), open a terminal and run:
+
+```python
+python3 generate_evaluation_report_tokens.py biodivner_gpt-4o-mini/parsed/similarity_5_parsed_output.json 
+```
 
 These files contain only valid model output i.e. output that can be processed as a Python list.
-Each file also contains the gold sentence as string, the gold and predicted spans, the prompt and the valid raw output (valid == Python list)
 
 The script can be run from terminal with the command: python3 generate_evaluation_report.py corpus_name/model_name/json file with prompts (example: biodivner_bio/gpt-4o-2024-05-13/prompts_combination_1_4_valid_output.json)
 
