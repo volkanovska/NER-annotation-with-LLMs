@@ -1,4 +1,4 @@
-# coling2025_submission
+# noladida submission
 
 This repository contains prompts and model responses for two corpora of named entities and three large language models (LLM).
 
