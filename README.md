@@ -76,7 +76,6 @@ JSON files designated as **raw** store a list of dictionaries with identical str
 ]
 ```
 
-
 ## Generating classification reports
 
 Classification reports for each type of prompt can be recreated by running the script *generate_evaluation_report_tokens.py* for promts with token-based input, or the script *generate_evaluation_report_strings.py* for prompts with string-based input. 
@@ -87,7 +86,11 @@ For example, to obtain the results for the dataset **BiodivNER**, model **gpt-4o
 python3 generate_evaluation_report_tokens.py biodivner_gpt-4o-mini/parsed/similarity_5_parsed_output.json 
 ```
 
-# Citing the holders of the datasets used in the experiments
+## Prompt examples
+
+The files *Prompt_example_string_ccner_nodalida.pdf* and *Prompt_example_tokens_biodivner_nodalida.pdf* are examples of string-based and token-based prompts respectively. These files are provided for clearer overview of the prompt structure, the blueprint of which is given in Figure 1 of the paper.
+
+# Dataset holders
 
 **Climate-Change-NER**
 
