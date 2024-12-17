@@ -1,46 +1,97 @@
-# Supplementary data and code for a submission to the NLP4Ecology2025 workshop of the NoDaLiDA2025 conference. 
-Submission title: "Large Language Models as Annotators of Named Entities in Climate Change and Biodiversity: A Preliminary Study". 
+# Supplementary data and code 
+### Workshop: NLP4Ecology
+### Submission title: "Large Language Models as Annotators of Named Entities in Climate Change and Biodiversity: A Preliminary Study"
 
 This repository contains the complete set of prompts tested in the experiments and the results obtained from each large language model (LLM).
+LLMs tested:
+- gpt-4o-mini (OpenAI, proprietary);
+- gpt-4o-2024-05-13 (OpenAI, proprietary);
+- Meta-Llama-3.1-70B-Instruct (Meta, open-source);
+- Meta-Llama-3.1-405B-Instruct (Meta, open-source).
+  
+For prompts from the dataset **Climate-Change-NER**, the system message is: *You are a helpful climate change expert, specialized in annotating named entities in texts on climate change.*
 
-Four LLMs are tested: two proprietary - gpt-4o-mini and gpt-4o-2024-05-13, developed and owned by OpenAI, and two open-source: Meta-Llama-3.1-70B-Instruct (hereinafter: Llama-70B) and Meta-Llama-3.1-405B-Instruct (hereinafter: Llama-405B), both developed and owned by Meta and made available both through Hugging Face and API providers.  
+For prompts from the dataset **BiodivNER**, the system message is: *You are a helpful biodiversity expert, specialized in annotating named entities in texts on biodiversity.*
 
-For prompts from the dataset Climate-Change-NER, the system message is: "You are a helpful climate change expert, specialized in annotating named entities in texts on climate change."
+## Storing model output
 
-For prompts from the dataset BiodivNER, the system message is: "You are a helpful biodiversity expert, specialized in annotating named entities in texts on biodiversity."
+The output for each model and prompt type is stored in dedicated folders. The naming convention is: name of dataset_input/output format_name of model. For example, for the dataset Climate-Change-NER (ccner), token-based prompt and output format, and gpt-4o-mini model, the name of the dedicated folder is: ccner_tokens_gpt-4o-mini. 
 
-# Generating classification reports
+There are *two* subdirectories within each dedicated directory, which show the model's result in two different forms: **parsed**, where the generated text from the model has been preprocessed in a format allowing the calculation of F1 score, and **raw**, where the model's generated text is presented as-is. 
 
-Classification reports for each type of prompt can be recreated by running the script "generate_evaluation_report_tokens.py" for promts with token-based input, or the script "generate_evaluation_report_strings.py" for prompts with string-based input. 
+**Example structure of dedicated directory**
 
-For example, to obtain the results for the dataset BiodivNER, model gpt-4o-mini, and a prompt type containing similar 5 task examples (TEs), open a terminal and run:
+```bash
+├── ccner_tokens_gpt-4o-mini
+│   ├── parsed
+│   │   ├── combination_1_4_parsed_output.json    # corresponds to NE class cluster 1
+│   │   ├── combination_2_4_parsed_output.json    # corresponds to NE class cluster 2
+│   │   ├── combination_3_4_parsed_output.json    # corresponds to NE class cluster 3
+│   │   ├── combination_4_4_parsed_output.json    # corresponds to NE class cluster 4
+│   │   ├── random_3_parsed_output.json           # a prompt with random k examples, where k == 3
+│   │   ├── random_4_parsed_output.json           # a prompt with random k examples, where k == 4
+│   │   ├── random_5_parsed_output.json           # a prompt with random k examples, where k == 5
+│   │   ├── similarity_3_parsed_output.json       # a prompt with similar k examples, where k == 3
+│   │   ├── similarity_4_parsed_output.json       # a prompt with similar k examples, where k == 4
+│   │   ├── similarity_4_parsed_output.json       # a prompt with similar k examples, where k == 5
+│   ├── raw
+│       ├── combination_1_4_raw_output.json       # corresponds to NE class cluster 1
+│       ├── combination_2_4_raw_output.json       # corresponds to NE class cluster 2
+│       ├── combination_3_4_raw_output.json       # corresponds to NE class cluster 3
+│       ├── combination_4_4_raw_output.json       # corresponds to NE class cluster 4
+│       ├── random_3_raw_output.json              # a prompt with random k examples, where k == 3
+│       ├── random_4_raw_output.json              # a prompt with random k examples, where k == 4
+│       ├── random_5_raw_output.json              # a prompt with random k examples, where k == 5
+│       ├── similarity_3_raw_output.json          # a prompt with similar k examples, where k == 3
+│       ├── similarity_4_raw_output.json          # a prompt with similar k examples, where k == 4
+│       ├── similarity_5_raw_output.json          # a prompt with similar k examples, where k == 5
+
+```
+
+JSON files designated as **parsed** store a list of dictionaries with identical structure, which is:
+
+```python3
+[
+    {"gold_sent_str": # Gold sentence presented as a string,
+     "gold_spans": [[NE instance 1, NE class, start token index, end token index], [NE instance 2, NE class, start token index, end token index] ...],
+     "gold_token_labels": [[token_1, IOB-tag], [token_2, IOB-tag], [token_3, IOB-tag] ...],
+     "predicted_spans": [[NE instance 1, NE class, start token index, end token index], [NE instance 2, NE class, start token index, end token index] ...],
+     "predicted_token_labels": [[token_1, IOB-tag], [token_2, IOB-tag], [token_3, IOB-tag] ...],   
+    },
+    {
+    ...
+    }
+]
+```
+JSON files designated as **raw** store a list of dictionaries with identical structure, which is:
+
+```python3
+[
+    {"prompt": # Prompt sent to the LLM,
+     "raw_output": # The text generated by the LLM before post-processing
+    },
+    {
+    ...
+    }
+]
+```
+
+
+## Generating classification reports
+
+Classification reports for each type of prompt can be recreated by running the script *generate_evaluation_report_tokens.py* for promts with token-based input, or the script *generate_evaluation_report_strings.py* for prompts with string-based input. 
+
+For example, to obtain the results for the dataset **BiodivNER**, model **gpt-4o-mini**, and a prompt type containing **similar 5 task examples** (TEs), open a terminal and run:
 
 ```python
 python3 generate_evaluation_report_tokens.py biodivner_gpt-4o-mini/parsed/similarity_5_parsed_output.json 
 ```
 
-These files contain only valid model output i.e. output that can be processed as a Python list.
+# Citing the holders of the datasets used in the experiments
 
-The script can be run from terminal with the command: python3 generate_evaluation_report.py corpus_name/model_name/json file with prompts (example: biodivner_bio/gpt-4o-2024-05-13/prompts_combination_1_4_valid_output.json)
+**Climate-Change-NER**
 
-# Inspecting raw output
-
-The raw output per dataset and per model, is saved in json files under the directories "ccner_raw_output" and "biodivner_raw_output".
-Each file is a list of dictionaries storing the prompt and the respective response. 
-
-Structure of directory:
-
--biodivner_raw_output OR ccner_raw_output
-    -gpt-4o-224-05-13
-        - prompt + raw model output, saved as json files per prompt
-    -gpt-4o-mini
-        - prompt + raw model output, saved as json files per prompt
-    - mistralV03
-        - prompt + raw model output, saved as json files per prompt
-
-# Citing the data holders
-
-Climate-Change-NER (https://huggingface.co/datasets/ibm/Climate-Change-NER):
+Link to dataset: https://huggingface.co/datasets/ibm/Climate-Change-NER
 
 ```bibtex
 @misc{bhattacharjee2024indus,
@@ -54,7 +105,9 @@ Climate-Change-NER (https://huggingface.co/datasets/ibm/Climate-Change-NER):
 }
 ```
 
-BiodivNER (https://zenodo.org/records/6458503):
+**BiodivNER** 
+
+Link to dataset: https://zenodo.org/records/6458503
 
 ```bibtex
 @dataset{nora_abdelmageed_2022_6575865,
