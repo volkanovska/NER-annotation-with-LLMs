@@ -15,9 +15,9 @@ For prompts from the dataset **BiodivNER**, the system message is: *You are a he
 
 ## Storing model output
 
-The output for each model and prompt type is stored in dedicated folders. The naming convention is: name of dataset_input/output format_name of model. For example, for the dataset Climate-Change-NER (ccner), token-based prompt and output format, and gpt-4o-mini model, the name of the dedicated folder is: ccner_tokens_gpt-4o-mini. 
+The output for each model and prompt type is stored in dedicated directories. The naming convention is: name of dataset + _ + input/output format + _ + name of model. For example, for the dataset Climate-Change-NER (ccner), token-based prompt and output format, and gpt-4o-mini model, the name of the dedicated folder is: ccner_tokens_gpt-4o-mini. 
 
-There are *two* subdirectories within each dedicated directory, which show the model's result in two different forms: **parsed**, where the generated text from the model has been preprocessed in a format allowing the calculation of F1 score, and **raw**, where the model's generated text is presented as-is. 
+There are *two* subdirectories within each dedicated directory, which contain the models' results in two different forms: **parsed**, where the generated text from the model has been postprocessed in a format allowing the calculation of F1 score, and **raw**, which contain the original output from each model. 
 
 **Example structure of dedicated directory**
 
