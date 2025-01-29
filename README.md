@@ -76,9 +76,9 @@ JSON files designated as **raw** store a list of dictionaries with identical str
 ]
 ```
 
-## Generating classification reports
+## Generating evaluation reports
 
-Classification reports for each type of prompt can be recreated by running the script *generate_evaluation_report_tokens.py* for promts with token-based input, or the script *generate_evaluation_report_strings.py* for prompts with string-based input. 
+Evaluation reports for each type of prompt can be recreated by running the script *generate_evaluation_report_tokens.py* for promts with token-based input, or the script *generate_evaluation_report_strings.py* for prompts with string-based input. 
 
 For example, to obtain the results for the dataset **BiodivNER**, model **gpt-4o-mini**, and a prompt type containing **similar 5 task examples** (TEs), open a terminal and run:
 
