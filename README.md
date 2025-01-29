@@ -13,7 +13,7 @@ For prompts from the dataset **Climate-Change-NER**, the system message is: *You
 
 For prompts from the dataset **BiodivNER**, the system message is: *You are a helpful biodiversity expert, specialized in annotating named entities in texts on biodiversity.*
 
-## Storing model output
+## Saving model output
 
 The output for each model and prompt type is stored in dedicated directories. The naming convention is: name of dataset + _ + input/output format + _ + name of model. For example, for the dataset Climate-Change-NER (ccner), token-based prompt and output format, and gpt-4o-mini model, the name of the dedicated folder is: ccner_tokens_gpt-4o-mini. 
 
