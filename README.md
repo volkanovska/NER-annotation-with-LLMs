@@ -90,6 +90,16 @@ python3 generate_evaluation_report_tokens.py biodivner_gpt-4o-mini/parsed/simila
 
 The files *Prompt_example_string_ccner_nodalida.pdf* and *Prompt_example_tokens_biodivner_nodalida.pdf* are examples of string-based and token-based prompts respectively. These files are provided for clearer overview of the prompt structure, the blueprint of which is given in Figure 1 of the paper.
 
+## Error count
+
+Errors in the categories *sources of confusion*, *possible candidates*, *new categories*, and *pure noise*, as well as *missed entities* and *perfect matches*, can be obtained by running the scripts count_errors_ccner.py and count_errors_biodivner.py for each dataset respectively. At the moment, the script counts errors in full prompts; this can be adjusted.
+
+## Ranking NE categories in error count output
+
+NE categories that appear most frequently in the error counts can be see in the directory error_rankings. Rankings are grouped by model size: *large* includes the models gpt-4o-2024-05-13 and Meta-Llama-3.1-405B-Instruct, and *small* the models gpt-4o-mini and Meta-Llama-3.1-70B-Instruct.
+
+The ranking is available for the error classes *sources of confusion*, *possible candidates*, *new categories*, and *pure noise*.
+
 # Dataset holders
 
 **Climate-Change-NER**
