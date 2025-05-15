@@ -79,10 +79,12 @@ for model in models:
 
                     for entity, category, _, _ in item["predicted_spans"]:
                         try:
-                            if (entity, category) not in predicted_lookup_dict.keys():
-                                predicted_lookup_dict.update({(entity, category): 1})
+                            entity_s = entity.strip()
+                            category_s = category.strip()
+                            if (entity_s, category_s) not in predicted_lookup_dict.keys():
+                                predicted_lookup_dict.update({(entity_s, category_s): 1})
                             else:
-                                predicted_lookup_dict[(entity, category)] += 1
+                                predicted_lookup_dict[(entity_s, category_s)] += 1
                         except Exception as e:
 
                             if isinstance(item["predicted_spans"], list) and len(item)==1 and isinstance(item["predicted_spans"][0], list):
@@ -90,10 +92,12 @@ for model in models:
                                     flattened_output = item["predicted_spans"][0]
 
                                     for entity, category, _, _ in flattened_output:
-                                        if (entity, category) not in predicted_lookup_dict.keys():
-                                            predicted_lookup_dict.update({(entity, category): 1})
+                                        entity_s = entity.strip()
+                                        category_s = category.strip()
+                                        if (entity_s, category_s) not in predicted_lookup_dict.keys():
+                                            predicted_lookup_dict.update({(entity_s, category_s): 1})
                                         else:
-                                            predicted_lookup_dict[(entity, category)] += 1
+                                            predicted_lookup_dict[(entity_s, category_s)] += 1
 
             gold_entities = [k[0] for k in gold_lookup_dict.keys()]
             gold_categories = [k[1] for k in gold_lookup_dict.keys()]
@@ -109,8 +113,8 @@ for model in models:
 
             for entity_category, count in predicted_lookup_dict.items():
 
-                entity = entity_category[0]
-                category = entity_category[1]
+                entity = entity_category[0].strip()
+                category = entity_category[1].strip()
 
                 if entity_category in gold_lookup_dict.keys():
                     perfect.append([entity, category, predicted_lookup_dict[entity_category], gold_lookup_dict[entity_category]])
