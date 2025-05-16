@@ -6,7 +6,7 @@ models_all = ["gpt-4o-2024-05-13", "gpt-4o-mini", "Meta-Llama-3.1-70B-Instruct",
 models_large = ["gpt-4o-2024-05-13", "Meta-Llama-3.1-405B-Instruct"]
 models_small = ["gpt-4o-mini", "Meta-Llama-3.1-70B-Instruct"]
 input_output_type = "tokens" # can be strings
-error_type = "pure_noise" # can be confusion, new_categories, potential, pure noise 
+error_type = "new_categories" # can be confusion, new_categories, possible, pure noise, perfect, missed  
 prompt_type = "full" # or "combination" for cluster prompts
 error_counts_dir = f"error_counts/{dataset}"
 output_dir = "error_rankings"
@@ -30,25 +30,77 @@ for model in models_all:
             elif model in models_large:
                 large_models_results.append(df)
 
+if error_type == "missed":
+    
+    large_combined_dfs = pd.concat(large_models_results, ignore_index=True)
+    large_combined_counts = large_combined_dfs.groupby(["gold_entity", "gold_category"], as_index=False)["gold_count"].sum()
+    large_combined_counts["gold_count_normalized"] = (large_combined_counts["gold_count"]/12).round(2)
+    large_combined_counts_sorted = large_combined_counts.sort_values(by="gold_count_normalized", ascending=False).reset_index(drop=True)
+    large_combined_counts_sorted.to_excel(f"{output_dir}/{dataset}/{error_type}_full_prompts_large_models_error_counts.xlsx", index=False)
 
-large_combined_dfs = pd.concat(large_models_results, ignore_index=True)
-large_combined_counts = large_combined_dfs.groupby(["predicted_entity", "predicted_category"], as_index=False)["predicted_count"].sum()
-large_combined_counts["predicted_count_normalized"] = (large_combined_counts["predicted_count"]/12).round(2)
-large_combined_counts_sorted = large_combined_counts.sort_values(by="predicted_count_normalized", ascending=False).reset_index(drop=True)
-large_combined_counts_sorted.to_excel(f"{output_dir}/{dataset}/{error_type}_full_prompts_large_models_error_counts.xlsx", index=False)
+    large_category_ranking = large_combined_counts_sorted.groupby("gold_category", as_index=False)["gold_count_normalized"].sum()
+    large_category_ranking["rank"] = large_category_ranking["gold_count_normalized"].rank(method="dense", ascending=False).astype(int)
+    large_category_ranking = large_category_ranking.sort_values("rank").reset_index(drop=True)
+    large_category_ranking.to_excel(f"{output_dir}/{dataset}/{error_type}_full_prompts_large_models_error_category_ranking.xlsx", index=False)
 
-large_category_ranking = large_combined_counts_sorted.groupby("predicted_category", as_index=False)["predicted_count_normalized"].sum()
-large_category_ranking["rank"] = large_category_ranking["predicted_count_normalized"].rank(method="dense", ascending=False).astype(int)
-large_category_ranking = large_category_ranking.sort_values("rank").reset_index(drop=True)
-large_category_ranking.to_excel(f"{output_dir}/{dataset}/{error_type}_full_prompts_large_models_error_category_ranking.xlsx", index=False)
+    small_combined_dfs = pd.concat(small_models_results, ignore_index=True)
+    small_combined_counts = small_combined_dfs.groupby(["gold_entity", "gold_category"], as_index=False)["gold_count"].sum()
+    small_combined_counts["gold_count_normalized"] = (small_combined_counts["gold_count"]/12).round(2)
+    small_combined_counts_sorted = small_combined_counts.sort_values(by="gold_count_normalized", ascending=False).reset_index(drop=True)
+    small_combined_counts_sorted.to_excel(f"{output_dir}/{dataset}/{error_type}_full_prompts_small_models_error_counts.xlsx", index=False)
 
-small_combined_dfs = pd.concat(small_models_results, ignore_index=True)
-small_combined_counts = small_combined_dfs.groupby(["predicted_entity", "predicted_category"], as_index=False)["predicted_count"].sum()
-small_combined_counts["predicted_count_normalized"] = (small_combined_counts["predicted_count"]/12).round(2)
-small_combined_counts_sorted = small_combined_counts.sort_values(by="predicted_count_normalized", ascending=False).reset_index(drop=True)
-small_combined_counts_sorted.to_excel(f"{output_dir}/{dataset}/{error_type}_full_prompts_small_models_error_counts.xlsx", index=False)
+    small_category_ranking = small_combined_counts_sorted.groupby("gold_category", as_index=False)["gold_count_normalized"].sum()
+    small_category_ranking["rank"] = small_category_ranking["gold_count_normalized"].rank(method="dense", ascending=False).astype(int)
+    small_category_ranking = small_category_ranking.sort_values("rank").reset_index(drop=True)
+    small_category_ranking.to_excel(f"{output_dir}/{dataset}/{error_type}_full_prompts_small_models_error_category_ranking.xlsx", index=False)
 
-small_category_ranking = small_combined_counts_sorted.groupby("predicted_category", as_index=False)["predicted_count_normalized"].sum()
-small_category_ranking["rank"] = small_category_ranking["predicted_count_normalized"].rank(method="dense", ascending=False).astype(int)
-small_category_ranking = small_category_ranking.sort_values("rank").reset_index(drop=True)
-small_category_ranking.to_excel(f"{output_dir}/{dataset}/{error_type}_full_prompts_small_models_error_category_ranking.xlsx", index=False)
+    exit()
+
+elif error_type == "perfect":
+
+    large_combined_dfs = pd.concat(large_models_results, ignore_index=True)
+    large_combined_counts = large_combined_dfs.groupby(["predicted_entity", "predicted_category"], as_index=False).agg({"predicted_count": "sum", "gold_count": "first"})
+    large_combined_counts["predicted_count_normalized"] = (large_combined_counts["predicted_count"]/12).round(2)
+    large_combined_counts_sorted = large_combined_counts.sort_values(by="predicted_count_normalized", ascending=False).reset_index(drop=True)
+    large_combined_counts_sorted.to_excel(f"{output_dir}/{dataset}/{error_type}_full_prompts_large_models_error_counts.xlsx", index=False)
+    #large_combined_counts_sorted.to_csv(f"{output_dir}/{dataset}/{error_type}_full_prompts_large_models_error_counts_DEBUG.csv", index=False)
+
+    large_category_ranking = large_combined_counts_sorted.groupby("predicted_category", as_index=False)["predicted_count_normalized"].sum()
+    large_category_ranking["rank"] = large_category_ranking["predicted_count_normalized"].rank(method="dense", ascending=False).astype(int)
+    large_category_ranking = large_category_ranking.sort_values("rank").reset_index(drop=True)
+    large_category_ranking.to_excel(f"{output_dir}/{dataset}/{error_type}_full_prompts_large_models_error_category_ranking.xlsx", index=False)
+
+    small_combined_dfs = pd.concat(small_models_results, ignore_index=True)
+    small_combined_counts = small_combined_dfs.groupby(["predicted_entity", "predicted_category"], as_index=False)["predicted_count"].sum()
+    small_combined_counts["predicted_count_normalized"] = (small_combined_counts["predicted_count"]/12).round(2)
+    small_combined_counts_sorted = small_combined_counts.sort_values(by="predicted_count_normalized", ascending=False).reset_index(drop=True)
+    small_combined_counts_sorted.to_excel(f"{output_dir}/{dataset}/{error_type}_full_prompts_small_models_error_counts.xlsx", index=False)
+
+    small_category_ranking = small_combined_counts_sorted.groupby("predicted_category", as_index=False)["predicted_count_normalized"].sum()
+    small_category_ranking["rank"] = small_category_ranking["predicted_count_normalized"].rank(method="dense", ascending=False).astype(int)
+    small_category_ranking = small_category_ranking.sort_values("rank").reset_index(drop=True)
+    small_category_ranking.to_excel(f"{output_dir}/{dataset}/{error_type}_full_prompts_small_models_error_category_ranking.xlsx", index=False)
+
+    exit()
+else:
+    large_combined_dfs = pd.concat(large_models_results, ignore_index=True)
+    large_combined_counts = large_combined_dfs.groupby(["predicted_entity", "predicted_category"], as_index=False)["predicted_count"].sum()
+    large_combined_counts["predicted_count_normalized"] = (large_combined_counts["predicted_count"]/12).round(2)
+    large_combined_counts_sorted = large_combined_counts.sort_values(by="predicted_count_normalized", ascending=False).reset_index(drop=True)
+    large_combined_counts_sorted.to_excel(f"{output_dir}/{dataset}/{error_type}_full_prompts_large_models_error_counts.xlsx", index=False)
+
+    large_category_ranking = large_combined_counts_sorted.groupby("predicted_category", as_index=False)["predicted_count_normalized"].sum()
+    large_category_ranking["rank"] = large_category_ranking["predicted_count_normalized"].rank(method="dense", ascending=False).astype(int)
+    large_category_ranking = large_category_ranking.sort_values("rank").reset_index(drop=True)
+    large_category_ranking.to_excel(f"{output_dir}/{dataset}/{error_type}_full_prompts_large_models_error_category_ranking.xlsx", index=False)
+
+    small_combined_dfs = pd.concat(small_models_results, ignore_index=True)
+    small_combined_counts = small_combined_dfs.groupby(["predicted_entity", "predicted_category"], as_index=False)["predicted_count"].sum()
+    small_combined_counts["predicted_count_normalized"] = (small_combined_counts["predicted_count"]/12).round(2)
+    small_combined_counts_sorted = small_combined_counts.sort_values(by="predicted_count_normalized", ascending=False).reset_index(drop=True)
+    small_combined_counts_sorted.to_excel(f"{output_dir}/{dataset}/{error_type}_full_prompts_small_models_error_counts.xlsx", index=False)
+
+    small_category_ranking = small_combined_counts_sorted.groupby("predicted_category", as_index=False)["predicted_count_normalized"].sum()
+    small_category_ranking["rank"] = small_category_ranking["predicted_count_normalized"].rank(method="dense", ascending=False).astype(int)
+    small_category_ranking = small_category_ranking.sort_values("rank").reset_index(drop=True)
+    small_category_ranking.to_excel(f"{output_dir}/{dataset}/{error_type}_full_prompts_small_models_error_category_ranking.xlsx", index=False)

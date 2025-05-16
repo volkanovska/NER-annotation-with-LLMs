@@ -154,7 +154,7 @@ for model in models:
             df_confusion.to_excel(f"{output_dir}/{input_output_type}_confusion.xlsx", index=False)
 
             df_potential = pd.DataFrame(potential, columns=["predicted_entity", "predicted_category", "predicted_count"])
-            df_potential.to_excel(f"{output_dir}/{input_output_type}_potential.xlsx", index=False) 
+            df_potential.to_excel(f"{output_dir}/{input_output_type}_possible.xlsx", index=False) 
             
             df_new_categories = pd.DataFrame(new_categories, columns=["predicted_entity", "predicted_category", "predicted_count"])
             df_new_categories.to_excel(f"{output_dir}/{input_output_type}_new_categories.xlsx", index=False)
