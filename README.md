@@ -163,10 +163,24 @@ The script counts errors detected in the output of token-based prompts.
 ### Error rankings
 
 The rankings are done by *combining* and *normalizing* the raw counts for full prompts. This is 6 prompts per model (prompts with 3, 4, and 5 *random* examples and prompts with 3, 4, and 5 *similar* examples). 
-The output of models is combined as follows:
+
+In paper (2) the rankings are calculated by combining the models' output as follows:
 
 - Large: gpt-4o-2024-05-13 and Meta-Llama-3.1-405B-Instruct;
 - Small: gpt-4o-mini and Meta-Llama-3.1-70B-Instruct.
+
+These results can be obtained by running the scripts rank_categories_biodivner.py and rank_categories_ccner.py from the terminal. The output is saved in the directory *error_rankings*.  
+From the terminal, run:
+python3 rank_categories_biodivner.py small OR python3 rank_categories_biodivner.py large 
+
+This repository also offers a script to run error count on individual models. The results are saved in the same directory (*error rankings*).
+To do this, run:
+python3 rank_categories_individual_models.py gpt-4o-mini missed biodivner, where:
+
+- the first argument is the name of the model (gpt-4o-mini, gpt-4o-2024-05-13, Meta-Llama-3.1-70B-Instruct, Meta-Llama-3.1-405B-Instruct).
+- the second argument is the name of the error ("confusion", "new_categories", "possible", "pure_noise", "missed", "perfect").
+- the third argument is the name of the dataset (biodivner, ccner),
+  
 
 #### Explanation of counts and ranking calculation (toy example)
 
