@@ -16,7 +16,7 @@ The LLMs used in these experiments include:
 
 Two NER datasets containing scientific texts are used in the experiments: **BiodivNER** with 6 domain-specific NE categories (ORGANISM, PHENOMENA, MATTER, ENVIRONMENT, QUALITY, LOCATION) and **Climate-Change-NER** with 13 domain-specific NE categories (CLIMATE-HAZARDS, CLIMATE-MITIGATIONS, CLIMATE-PROPERTIES, CLIMATE-NATURE, CLIMATE-MODELS, CLIMATE-PROBLEM-ORIGINS, CLIMATE-OBSERVATIONS, CLIMATE-ASSETS, CLIMATE-IMPACTS, CLIMATE-GREENHOUSE-GASES, CLIMATE-ORGANIZATIONS, CLIMATE-ORGANISMS, CLIMATE-DATASETS). 
 
-In this repository, the files **biodivner_dataset_info** and **ccner_dataset_info** contain comprehensive statistical information about each dataset.
+In this repository, the PDF files **biodivner_dataset_info** and **ccner_dataset_info** contain comprehensive statistical information about each dataset.
 
 See **Dataset holders** at the end of this README file for links to the datasets. 
 
@@ -31,25 +31,34 @@ For prompts from the dataset **Climate-Change-NER**, the system message is: *You
 For prompts from the dataset **BiodivNER**, the system message is: *You are a helpful biodiversity expert, specialized in annotating named entities in texts on biodiversity.*
 
  
-### Terminology and explanations
+### Terms and explanations
 
 **output_files**: Files in json formats containing the prompt and the model output.
+
 **output directories**: Directories where the model output is saved.
+
 **biodivner**: BiodivNER
+
 **ccner**: Climate-Change-NER
-**strings**: refers to string-based prompts, where an LLM is expected to extract NERs from a sentence - a Python string. Example in file **Prompt_example_string_ccner_nodalida**.
-**tokens**: refers to token-based prompts, where an LLM is expected to extract NERs from a Python list containing as nested list a token index and a word-based token. (Example: [[0, "The"], [2, "quick"], [3, "brown"], [4, "fox"], [5, "jumps"], [6, "over"], [7, "the"], [8, "lazy"], [9, "dog"]]). Example in file **Prompt_example_tokens_biodivner_nodalida.pdf**.
-**parsed**: refers to directories and output json files containing the parsed model output i.e. output cleaned from noise, such as sentences or an LLM's "reasoning". See section **Structure of output files** for information about the json files.
-**raw**: refers to directories and output json files containing the raw model output i.e. output that has not been post-processed. See section **Structure of output files** for information about the json files. 
-**full prompts**: refers to prompts where the LLM should extract NE from all NE categories.
+
+**string-based**: refers to prompts where an LLM is expected to extract NERs from a sentence - a Python string. Example in file **Prompt_example_string_ccner_nodalida**.
+
+**token-based**: refers to prompts where an LLM is expected to extract NERs from a Python list containing as nested list a token index and a word-based token. (Example: [[0, "The"], [2, "quick"], [3, "brown"], [4, "fox"], [5, "jumps"], [6, "over"], [7, "the"], [8, "lazy"], [9, "dog"]]). Example in file **Prompt_example_tokens_biodivner_nodalida.pdf**.
+
+**parsed**: refers to output directories / JSON files containing post-processed model output. See section **Structure of output files** for information about the JSON files.
+
+**raw**: refers to output directories / JSON files containing the raw model output i.e. output that has not been post-processed. See section **Structure of output files** for information about the JSON files. 
+
+**full prompts**: refers to prompts where the LLM should extract NEs from all NE categories.
+
 **combination** or **cluster prompts**: refers to prompts where the LLM should recognise entities from 2 to 4 NE categories only.
-**task example(s)**: examples, shots the model is given in the prompt.
-**TE**: task example(s)
+
+**task example(s)** or **TE(s)**: question-answer pairs that the model is given as an example of what task it is expected to process.
 
 
-### Saving model output
+### Saving LLM output
 
-The output of each model and prompt type is stored in dedicated directories. The naming convention for each directory is: name of dataset + _ + input/output format + _ + name of model. For example, for the dataset Climate-Change-NER (ccner), token-based prompt and output format, and gpt-4o-mini model, the name of the dedicated folder is: ccner_tokens_gpt-4o-mini. 
+The output of each LLM and prompt type is stored in dedicated directories. The naming convention for each directory is: name of dataset + _ + input/output format + _ + name of model. For example, for the dataset Climate-Change-NER (ccner), token-based prompt and output format, and gpt-4o-mini model, the name of the dedicated folder is: ccner_tokens_gpt-4o-mini. 
 
 There are *two* subdirectories within each dedicated directory, which contain the models' results in two different forms: **parsed**, where the generated text from the model has been postprocessed in a format allowing the calculation of F1 score, and **raw**, which contain the original output from each model. 
 
@@ -134,9 +143,16 @@ python3 generate_evaluation_report_tokens.py biodivner_gpt-4o-mini/parsed/simila
 ## Error taxonomy
 
 A detailed description of the error taxonomy is provided in paper (2). 
+
+The error classes are: missed entities, sources of confusion, possible candidates, new categories, and pure noise.
+
 Two directories contain error-relevant information: *error_counts* and *error_rankings*.
 
 ### Error counts
+
+Error counts contain the number of times instances of an error class have been encountered in an LLM's output. It serves as the basis for error rankings.
+
+Error counts are available for each individual model.
 
 In addition to *missed entities* and *perfect matches*, errors of the classes *sources of confusion*, *possible candidates*, *new categories*, and *pure noise* can be obtained by running the scripts count_errors_ccner.py and count_errors_biodivner.py for each dataset respectively. At the moment, the script counts errors in full prompts.
 
@@ -147,7 +163,7 @@ The script counts errors detected in the output of token-based prompts.
 ### Error rankings
 
 The rankings are done by *combining* and *normalizing* the raw counts for full prompts. This is 6 prompts per model (prompts with 3, 4, and 5 *random* examples and prompts with 3, 4, and 5 *similar* examples). 
-Then, output of *large* and *small* models is combined.
+The output of models is combined as follows:
 
 - Large: gpt-4o-2024-05-13 and Meta-Llama-3.1-405B-Instruct;
 - Small: gpt-4o-mini and Meta-Llama-3.1-70B-Instruct.
@@ -168,20 +184,19 @@ Let's imagine that gpt-4o-mini and Llama-70B wrongly annotate *climate change* a
 
 The normalized error count for the ENTITY *climate change* is (34 + 22) / 12 = 4.67.
 
+**Ranking**
+
 The models annotated 2 more named entities in the same category, with normalized error counts of 3.23 and 1.56.
 The error count for the category CLIMATE-PROBLEM-ORIGIN will then be: 4.67 + 3.23 + 1.56 = 9,46.
-
-The normalized error count and the error count are calculated for each named entity and each category, for the four error classes (sources of confusion, possible candidates, pure noise, new categories).
-
 
 This directory contains Excel sheets with error rankings on two levels:
 
 (1) By NE category, where entity categories are ranked by their frequency in a certain error type, and
-(2) By entity, 
+(2) By entity. 
 
-NE categories that appear most frequently in the error counts can be see in the directory error_rankings. Rankings are grouped by model size: *large* includes the models gpt-4o-2024-05-13 and Meta-Llama-3.1-405B-Instruct, and *small* the models gpt-4o-mini and Meta-Llama-3.1-70B-Instruct.
+NE categories that appear most frequently in the error counts can be seen in the directory *error_rankings*. 
+In paper (2), rankings are grouped by model size; this repository also contains rankings for individual models.
 
-The ranking is available for the error classes *sources of confusion*, *possible candidates*, *new categories*, and *pure noise*.
 
 # Dataset holders
 
