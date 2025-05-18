@@ -152,6 +152,8 @@ Two directories contain error-relevant information: *error_counts* and *error_ra
 
 Error counts contain the number of times instances of an error class have been encountered in an LLM's output. It serves as the basis for error rankings.
 
+Error counts are available for each individual model.
+
 In addition to *missed entities* and *perfect matches*, errors of the classes *sources of confusion*, *possible candidates*, *new categories*, and *pure noise* can be obtained by running the scripts count_errors_ccner.py and count_errors_biodivner.py for each dataset respectively. At the moment, the script counts errors in full prompts.
 
 The script counts errors detected in the output of token-based prompts. 
