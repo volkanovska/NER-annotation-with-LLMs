@@ -156,13 +156,12 @@ The files *Prompt_example_string_ccner_nodalida.pdf* and *Prompt_example_tokens_
 
 ### Generating evaluation reports for F scores
 
-Evaluation reports for each type of prompt can be recreated by running the script *generate_evaluation_report_tokens.py* for promts with token-based input, or the script *generate_evaluation_report_strings.py* for prompts with string-based input. 
-
-For example, to obtain the results for the dataset **BiodivNER**, model **gpt-4o-mini**, and a prompt type containing **similar 5 task examples** (TEs), open a terminal and run:
+Evaluation reports for each type of prompt can be recreated by running the script *generate_evaluation_report_tokens.py* for promts with token-based input, or the script *generate_evaluation_report_strings.py* for prompts with string-based input in the terminal. 
 
 ```python3
-python3 generate_evaluation_report_tokens.py biodivner_gpt-4o-mini/parsed/similarity_5_parsed_output.json 
+python3 generate_evaluation_report_tokens.py 
 ```
+Follow the instructions that the script generates.
 
 ## Error taxonomy
 

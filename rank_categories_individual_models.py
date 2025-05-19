@@ -9,15 +9,8 @@ PRINT OUT THE NAME AND PATH OF THE RESULT FILES
 
 
 dataset = "ccner"
-#models_all = ["gpt-4o-2024-05-13", "gpt-4o-mini", "Meta-Llama-3.1-70B-Instruct", "Meta-Llama-3.1-405B-Instruct"]
-#model = "gpt-4o-2024-05-13"
 input_output_type = "tokens" # can be strings
-#error_type = "perfect" # can be confusion, new_categories, possible, pure_noise, missed, perfect  
 prompt_type = "full" # or "combination" for cluster prompts
-#error_counts_dir = f"error_counts/{dataset}"
-#output_dir = "error_rankings"
-#os.makedirs(f"{output_dir}/{dataset}", exist_ok=True)
-
 
 def get_user_choice_dataset():
     options = ["Climate Change NER", "BiodivNER"]
