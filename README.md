@@ -56,9 +56,33 @@ For prompts from the dataset **BiodivNER**, the system message is: *You are a he
 **task example(s)** or **TE(s)**: question-answer pairs that the model is given as an example of what task it is expected to process.
 
 
-### Saving LLM output
+### LLM output
 
-The output of each LLM and prompt type is stored in dedicated directories. The naming convention for each directory is: name of dataset + _ + input/output format + _ + name of model. For example, for the dataset Climate-Change-NER (ccner), token-based prompt and output format, and gpt-4o-mini model, the name of the dedicated folder is: ccner_tokens_gpt-4o-mini. 
+The output from each LLM and prompt type is stored in dedicated directories. The naming convention for each directory is: name of dataset + _ + input/output format + _ + name of model. For example, for the dataset Climate-Change-NER (ccner), token-based prompt and output format, and gpt-4o-mini model, the name of the dedicated folder is: ccner_tokens_gpt-4o-mini.
+
+There are eight dedicated directories per dataset.
+
+For Climate Change NER, these are:
+
+- ccner_strings_gpt-4o-2024-05-13;
+- ccner_strings_gpt-4o-mini;
+- ccner_strings_Meta-Llama-3.1-70B-Instruct;
+- ccner_strings_Meta-Llama-3.1-405B-Instruct;
+- ccner_tokens_gpt-4o-2024-05-13;
+- ccner_tokens_gpt-4o-mini;
+- ccner_tokens_Meta-Llama-3.1-70B-Instruct;
+- ccner_tokens_Meta-Llama-3.1-405B-Instruct.
+
+For BiodivNER, these are:
+
+- biodivner_strings_gpt-4o-2024-05-13;
+- biodivner_strings_gpt-4o-mini;
+- biodivner_strings_Meta-Llama-3.1-70B-Instruct;
+- biodivner_strings_Meta-Llama-3.1-405B-Instruct;
+- biodivner_tokens_gpt-4o-2024-05-13;
+- biodivner_tokens_gpt-4o-mini;
+- biodivner_tokens_Meta-Llama-3.1-70B-Instruct;
+- biodivner_tokens_Meta-Llama-3.1-405B-Instruct.
 
 There are *two* subdirectories within each dedicated directory, which contain the models' results in two different forms: **parsed**, where the generated text from the model has been postprocessed in a format allowing the calculation of F1 score, and **raw**, which contain the original output from each model. 
 
@@ -175,7 +199,8 @@ python3 rank_categories_biodivner.py small OR python3 rank_categories_biodivner.
 
 This repository also offers a script to run error count on individual models. The results are saved in the same directory (*error rankings*).
 To do this, run:
-python3 rank_categories_individual_models.py gpt-4o-mini missed biodivner, where:
+python3 rank_categories_individual_models.py 
+and follow the instructions in the prompts.
 
 - the first argument is the name of the model (gpt-4o-mini, gpt-4o-2024-05-13, Meta-Llama-3.1-70B-Instruct, Meta-Llama-3.1-405B-Instruct).
 - the second argument is the name of the error ("confusion", "new_categories", "possible", "pure_noise", "missed", "perfect").
