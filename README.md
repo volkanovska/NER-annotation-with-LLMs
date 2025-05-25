@@ -182,7 +182,6 @@ In addition to *missed entities* and *perfect matches*, errors of the classes *s
 
 The script counts errors detected in the output of token-based prompts. 
 
-[ADD GUIDELINES FOR COMBINATION PROMPTS]
 
 ### Error rankings
 
