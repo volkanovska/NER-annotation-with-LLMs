@@ -44,7 +44,7 @@ For prompts from the dataset **BiodivNER**, the system message is: *You are a he
 
 **string-based**: refers to prompts where an LLM is expected to extract NERs from a sentence - a Python string. Example in file **Prompt_example_string_ccner_nodalida**.
 
-**token-based**: refers to prompts where an LLM is expected to extract NERs from a Python list containing as nested list a token index and a word-based token. (Example: [[0, "The"], [2, "quick"], [3, "brown"], [4, "fox"], [5, "jumps"], [6, "over"], [7, "the"], [8, "lazy"], [9, "dog"]]). Example in file **Prompt_example_tokens_biodivner_nodalida.pdf**.
+**token-based**: refers to prompts where an LLM is expected to extract NERs from a Python list containing as nested list a token index and a word-based token. (Example: [[0, "The"], [1, "quick"], [2, "brown"], [3, "fox"], [4, "jumps"], [5, "over"], [6, "the"], [7, "lazy"], [8, "dog"]]). Example in file **Prompt_example_tokens_biodivner_nodalida.pdf**.
 
 **parsed**: refers to output directories / JSON files containing post-processed model output. See section **Structure of output files** for information about the JSON files.
 
