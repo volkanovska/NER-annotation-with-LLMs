@@ -1,5 +1,5 @@
 # Supplementary data and code  
-### This repository contains supplementari data and code for two papers:
+### This repository contains supplementary data and code for two papers:
 (1) "Large Language Models as Annotators of Named Entities in Climate Change and Biodiversity: A Preliminary Study", presented at the workshop NLP4Ecology in Tallinn, Estonia, and available at: https://aclanthology.org/2025.nlp4ecology-1.7/.
 
 (2) "A Study of Errors in the Output of Large Language Models for Domain-Specific Few-Shot Named Entity Recognition", which was presented at the workshop "LLM Fails: Failed Experiments with Generative AI and what we can learn from them", organised by IDS Mannheim in April, 2025. 
@@ -44,7 +44,7 @@ For prompts from the dataset **BiodivNER**, the system message is: *You are a he
 
 **string-based**: refers to prompts where an LLM is expected to extract NERs from a sentence - a Python string. Example in file **Prompt_example_string_ccner_nodalida**.
 
-**token-based**: refers to prompts where an LLM is expected to extract NERs from a Python list containing as nested list a token index and a word-based token. (Example: [[0, "The"], [1, "quick"], [2, "brown"], [3, "fox"], [4, "jumps"], [5, "over"], [6, "the"], [7, "lazy"], [8, "dog"]]). Example in file **Prompt_example_tokens_biodivner_nodalida.pdf**.
+**token-based**: refers to prompts where an LLM is expected to extract NERs from a Python list containing, as nested lists, a token index and a word-based token. (Example: [[0, "The"], [1, "quick"], [2, "brown"], [3, "fox"], [4, "jumps"], [5, "over"], [6, "the"], [7, "lazy"], [8, "dog"]]). Example in file **Prompt_example_tokens_biodivner_nodalida.pdf**.
 
 **parsed**: refers to output directories / JSON files containing post-processed model output. See section **Structure of output files** for information about the JSON files.
 
@@ -196,7 +196,7 @@ These results can be obtained by running the scripts rank_categories_biodivner.p
 From the terminal, run:
 python3 rank_categories_biodivner.py small OR python3 rank_categories_biodivner.py large 
 
-This repository also offers a script to run error count on individual models. The results are saved in the same directory (*error rankings*).
+This repository also offers a script to run error count per individual models. The results are saved in the same directory (*error rankings*).
 To do this, run:
 python3 rank_categories_individual_models.py 
 and follow the instructions in the prompts.
