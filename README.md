@@ -4,7 +4,7 @@
 
 (2) "A Study of Errors in the Output of Large Language Models for Domain-Specific Few-Shot Named Entity Recognition", which was presented at the workshop "LLM Fails: Failed Experiments with Generative AI and what we can learn from them", organised by IDS Mannheim in April, 2025. 
 
-Paper **(1)** explains the **methodology** underpinning the experiments, while paper **(2)** proposes a systematic **error taxonomy** that supplements existing error analyses for few-shot NER in a way that addresses challenges specific to using LLMs for domain-specific NER.
+Paper **(1)** explains the **methodology** underpinning the experiments, while paper **(2)** proposes a systematic **error classification** that supplements existing error analyses for few-shot NER in a way that addresses challenges specific to using LLMs for domain-specific NER.
 
 The LLMs used in these experiments include:
 
@@ -164,9 +164,9 @@ python3 generate_evaluation_report_tokens.py
 ```
 Follow the instructions that the script generates.
 
-## Error taxonomy
+## Error classification
 
-A detailed description of the error taxonomy is provided in paper (2). 
+A detailed description of the error classification is provided in paper (2). 
 
 The error classes are: missed entities, sources of confusion, possible candidates, new categories, and pure noise.
 
