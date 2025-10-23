@@ -2,16 +2,16 @@
 ### This repository contains supplementary data and code for two papers:
 (1) "Large Language Models as Annotators of Named Entities in Climate Change and Biodiversity: A Preliminary Study", presented at the workshop NLP4Ecology in Tallinn, Estonia, and available at: https://aclanthology.org/2025.nlp4ecology-1.7/.
 
-(2) "A Study of Errors in the Output of Large Language Models for Domain-Specific Few-Shot Named Entity Recognition", which was presented at the workshop "LLM Fails: Failed Experiments with Generative AI and what we can learn from them", organised by IDS Mannheim in April, 2025. 
+(2) "A Study of Errors in the Output of Large Language Models for Domain-Specific Few-Shot Named Entity Recognition", which was presented at the workshop "LLM Fails: Failed Experiments with Generative AI and what we can learn from them", organised by IDS Mannheim in April, 2025 and available at: https://jlcl.org/article/view/281.
 
-Paper **(1)** explains the **methodology** underpinning the experiments, while paper **(2)** proposes a systematic **error classification** that supplements existing error analyses for few-shot NER in a way that addresses challenges specific to using LLMs for domain-specific NER.
+Paper **(1)** explains the **methodology** underpinning the experiments, while paper **(2)** proposes a systematic **error classification** that supplements existing error analyses for few-shot NER in a way that addresses challenges specific to using LLMs for domain-specific NER. 
 
 The LLMs used in these experiments include:
 
 - gpt-4o-mini (OpenAI, proprietary);
 - gpt-4o-2024-05-13 (OpenAI, proprietary);
-- Meta-Llama-3.1-70B-Instruct (Meta, open-source);
-- Meta-Llama-3.1-405B-Instruct (Meta, open-source).
+- Meta-Llama-3.1-70B-Instruct (Meta, open-weight);
+- Meta-Llama-3.1-405B-Instruct (Meta, open-weight).
 
 ## Datasets
 
